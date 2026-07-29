@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK Game - Game Center</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HSK Game">
+    <link rel="apple-touch-icon" href="../pic/logo.png">
+</head>
+<body>
+
+    <div class="header-fixed">
+        <div class="profile">
+            <div class="avatar">👤</div>
+            <div class="info">
+                <h3 id="playerName">Damon</h3>
+                <p id="playerAge">23 tuổi</p>
+            </div>
+            <div class="player-status">
+                <div id="currentHSK">HSK 4</div>
+                <div id="playerRank">Đồng</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <div class="game-banner">
+            <div class="banner-text">
+                <h2>🎮 MINI GAMES</h2>
+                <p>Vừa chơi vừa ôn luyện Hán tự</p>
+            </div>
+            <div class="banner-stat">
+                🔥 4/4 Game<br>Sẵn sàng
+            </div>
+        </div>
+
+        <!-- Khối Game 1: Thần Tốc HSK -->
+        <a href="game1.html" class="game-item bg-speed">
+            <span class="game-badge badge-hot">🔥 CỰC HOT</span>
+            <div class="game-header">
+                <span class="game-icon">⚡</span>
+                <span class="game-title">THẦN TỐC HSK</span>
+            </div>
+            <p class="game-desc">Thử thách phản xạ chọn nghĩa Hán tự đếm ngược thời gian cực cấn.</p>
+            <div class="game-action">
+                ⏱️ THỬ SỨC NGAY ➔
+            </div>
+        </a>
+
+        <!-- Khối Game 2: Sát Thủ Pinyin -->
+        <a href="game2.html" class="game-item bg-assassin">
+            <span class="game-badge badge-new">✨ MỚI TOANH</span>
+            <div class="game-header">
+                <span class="game-icon">🥷</span>
+                <span class="game-title">SÁT THỦ PINYIN</span>
+            </div>
+            <p class="game-desc">Huấn luyện nhãn lực: Tiêu diệt các Pinyin giả mạo được trà trộn tinh vi để tìm ra đáp án thật.</p>
+            <div class="game-action assassin-btn">
+                ⚔️ RÚT KIẾM ➔
+            </div>
+        </a>
+        
+        <!-- Khối Game 3: Anh Hùng Bàn Phím -->
+        <a href="game3.html" class="game-item bg-rain">
+            <span class="game-badge badge-cyber">⚡ TỐC ĐỘ</span>
+            <div class="game-header">
+                <span class="game-icon">⌨️</span>
+                <span class="game-title">ANH HÙNG BÀN PHÍM</span>
+            </div>
+            <p class="game-desc">Anh hùng không dùng kiếm, anh hùng dùng bàn phím! Chứng minh tốc độ "múa phím" quét sạch Hán tự.</p>
+            <div class="game-action">
+                🌪️ QUÉT SẠCH ➔
+            </div>
+        </a>
+
+        <!-- Khối Game 4: Phẫu Thuật Từ -->
+        <a href="game4.html" class="game-item" style="background: linear-gradient(135deg, #00897b 0%, #004d40 100%);">
+            <span class="game-badge badge-danger">🩸 HẠI NÃO</span>
+            <div class="game-header">
+                <span class="game-icon">👨‍⚕️</span>
+                <span class="game-title">PHẪU THUẬT TỪ</span>
+            </div>
+            <p class="game-desc">Dao kéo vô tình, Hán tự bẻ vụn! Lắp ráp, khâu vá các mảnh ghép để cứu sống từ vựng.</p>
+            <div class="game-action" style="background: rgba(0,0,0,0.25); border-color: rgba(255,255,255,0.5);">
+                💉 VÀO PHÒNG MỔ ➔
+            </div>
+        </a>
+    </div>
+
+    <div class="footer">
+        <a href="../index.html" class="nav-btn">
+            <span class="icon">🏠</span>
+            Trang chủ
+        </a>
+        
+        <a href="../index.html" class="logo-btn">
+            <img src="../pic/logo.png" alt="Logo">
+        </a>
+
+        <a href="setting.html" class="nav-btn">
+            <span class="icon">⚙️</span>
+            Cài đặt
+        </a>
+    </div>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

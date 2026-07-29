@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK Game - Ngữ Pháp</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HSK Game">
+    <link rel="apple-touch-icon" href="../pic/logo.png">
+</head>
+<body>
+
+    <div class="header-fixed">
+        <div class="profile">
+            <div class="avatar">👤</div>
+            <div class="info">
+                <h3 id="playerName">Damon</h3>
+                <p id="playerAge">23 tuổi</p>
+            </div>
+            <div class="player-status">
+                <div id="currentHSK">HSK 4</div>
+                <div id="playerRank">Đồng</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hsk-fixed-wrapper">
+        <div class="hsk-tabs">
+            <div class="hsk-tab active-tab" onclick="selectGrammarHsk(1, this)">HSK 1</div>
+            <div class="hsk-tab" onclick="selectGrammarHsk(2, this)">HSK 2</div>
+            <div class="hsk-tab" onclick="selectGrammarHsk(3, this)">HSK 3</div>
+            <div class="hsk-tab" onclick="selectGrammarHsk(4, this)">HSK 4</div>
+            <div class="hsk-tab" onclick="selectGrammarHsk(5, this)">HSK 5</div>
+            <div class="hsk-tab" onclick="selectGrammarHsk(6, this)">HSK 6</div>
+        </div>
+    </div>
+
+    <div class="container has-hsk">
+        <div class="dev-box">
+            <img src="../pic/baotri.png" alt="Đang phát triển" class="maintain-img">
+            
+            <h2 id="hskTitle">🚧 Ngữ Pháp HSK 1</h2>
+            <p>
+                Hệ thống cấu trúc ngữ pháp đang được tổng hợp.<br>
+                Vui lòng quay lại ở phiên bản tiếp theo nhé!
+            </p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <a href="../index.html" class="nav-btn">
+            <span class="icon">🏠</span>
+            Trang chủ
+        </a>
+        
+        <a href="../index.html" class="logo-btn">
+            <img src="../pic/logo.png" alt="Logo">
+        </a>
+
+        <a href="setting.html" class="nav-btn">
+            <span class="icon">⚙️</span>
+            Cài đặt
+        </a>
+    </div>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/app.js"></script>
+
+    <script>
+        function selectGrammarHsk(level, element) {
+            document.querySelectorAll('.hsk-tab').forEach(tab => tab.classList.remove('active-tab'));
+            element.classList.add('active-tab');
+            document.getElementById('hskTitle').innerText = `🚧 Ngữ Pháp HSK ${level}`;
+        }
+    </script>
+</body>
+</html>

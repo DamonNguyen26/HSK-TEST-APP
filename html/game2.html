@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK Game - Thử Thách Pinyin</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HSK Game">
+    <link rel="apple-touch-icon" href="../pic/logo.png">
+</head>
+<body>
+
+    <!-- Kế thừa Header Profile -->
+    <div class="header-fixed">
+        <div class="profile">
+            <div class="avatar">👤</div>
+            <div class="info">
+                <h3 id="playerName">Damon</h3>
+                <p id="playerAge">23 tuổi</p>
+            </div>
+            <div class="player-status">
+                <div id="currentHSK">HSK 4</div>
+                <div id="playerRank">Đồng</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <!-- MÀN HÌNH SETUP GAME 2 -->
+        <div id="game2Setup" class="setup-card">
+            <div class="setup-header">
+                <h2 class="setup-title" style="color: #b71c1c;">🥷 SÁT THỦ PINYIN</h2>
+                <p class="setup-subtitle">Chọn đúng Pinyin cho Hán tự hiển thị</p>
+            </div>
+
+            <div class="setup-group">
+                <div class="setup-label">📌 Phạm vi từ vựng:</div>
+                <div class="hsk-range-row">
+                    <select id="g2StartHskSelect" onchange="checkGame2Hsk()">
+                        <option value="1">HSK 1</option>
+                        <option value="2">HSK 2</option>
+                        <option value="3">HSK 3</option>
+                        <option value="4">HSK 4</option>
+                        <option value="5">HSK 5</option>
+                        <option value="6">HSK 6</option>
+                    </select>
+                    <span class="range-separator">đến</span>
+                    <select id="g2EndHskSelect" onchange="checkGame2Hsk()">
+                        <option value="1">HSK 1</option>
+                        <option value="2">HSK 2</option>
+                        <option value="3">HSK 3</option>
+                        <option value="4">HSK 4</option>
+                        <option value="5">HSK 5</option>
+                        <option value="6">HSK 6</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="setup-group">
+                <div class="setup-label">🔢 Số lượng câu hỏi:</div>
+                <input type="number" id="g2QuestionCount" class="setup-input-full" min="10" max="100" step="10" value="10">
+            </div>
+
+            <div class="setup-group">
+                <div class="setup-label">⚙️ Chế độ chơi:</div>
+                <div class="mode-grid">
+                    <div id="g2EasyModeCard" class="mode-card easy-card" onclick="selectGame2Mode('easy')">
+                        <h4>🟢 DỄ</h4>
+                        <p>Tổng thời gian</p>
+                        <select id="g2EasyTimeSelect" onclick="event.stopPropagation()"></select>
+                    </div>
+                    
+                    <div id="g2HardModeCard" class="mode-card hard-card" onclick="selectGame2Mode('hard')">
+                        <h4>🔴 KHÓ</h4>
+                        <p>Thời gian / câu</p>
+                        <select id="g2HardTimeSelect" onclick="event.stopPropagation()">
+                            <option value="7">7 giây / câu</option>
+                            <option value="5" selected>5 giây / câu</option>
+                            <option value="3">3 giây / câu</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-start-game" onclick="startGame2()">🚀 BẮT ĐẦU CHƠI</button>
+        </div>
+
+        <!-- MÀN HÌNH PLAY GAME 2 -->
+        <div id="game2PlayScreen" class="game-play-box" style="display: none;">
+            <h3 id="g2ProgressText" style="color: #888;">Câu 1/10</h3>
+            
+            <div class="timer-bar-container">
+                <div id="g2TimerFill" class="timer-bar-fill"></div>
+            </div>
+            
+            <p id="g2TimerText" style="font-weight: bold; color: #f44336;">0:00</p>
+            
+            <h1 id="g2QuestionHanzi" class="hanzi-display">汉字</h1>
+            
+            <div id="g2OptionsGrid" class="options-grid">
+                <!-- Nút đáp án render từ JS -->
+            </div>
+        </div>
+
+        <!-- MÀN HÌNH KẾT QUẢ GAME 2 -->
+        <div id="game2ResultScreen" class="game-play-box" style="display: none; padding: 25px 15px;">
+            <h2 style="font-size: 26px; color: #333;">🎉 HOÀN THÀNH!</h2>
+            <p style="color: #666; margin-top: 5px;">Điểm số của bạn:</p>
+            <h1 id="g2ScoreText" style="color: #4caf50; font-size: 45px; margin: 10px 0 5px 0;">10/10</h1>
+            
+            <!-- Hiển thị thời gian và Ghi chú -->
+            <p style="color: #888; font-size: 14px; font-weight: bold; margin-bottom: 5px;">⏱️ Thời gian: <span id="g2TotalTime">0 giây</span></p>
+            <p style="color: #f44336; font-size: 13px; font-style: italic;">(Dưới đây là các câu bạn đã làm sai)</p>
+            
+            <!-- Danh sách lịch sử -->
+            <div class="g2-history-list" id="g2HistoryList"></div>
+            
+            <!-- Nút điều hướng -->
+            <button class="btn-game-action btn-replay" style="margin-top: 15px;" onclick="resetGame2()">
+                🔄 CHƠI LẠI
+            </button>
+            <button class="btn-game-action btn-leave" onclick="leaveGame2()">
+                🚪 RỜI GAME
+            </button>
+        </div>
+
+
+    </div>
+
+    <!-- Kế thừa Footer -->
+    <div class="footer">
+        <a href="../index.html" class="nav-btn">
+            <span class="icon">🏠</span>
+            Trang chủ
+        </a>
+        <a href="../index.html" class="logo-btn">
+            <img src="../pic/logo.png" alt="Logo">
+        </a>
+        <a href="setting.html" class="nav-btn">
+            <span class="icon">⚙️</span>
+            Cài đặt
+        </a>
+    </div>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/game2.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

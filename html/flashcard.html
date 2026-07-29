@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK Game - Flashcard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HSK Game">
+    <link rel="apple-touch-icon" href="../pic/logo.png">
+</head>
+<body>
+
+    <!-- Header Profile Kế Thừa -->
+    <div class="header-fixed">
+        <div class="profile">
+            <div class="avatar">👤</div>
+            <div class="info">
+                <h3 id="playerName">Damon</h3>
+                <p id="playerAge">18 tuổi</p>
+            </div>
+            <div class="player-status">
+                <div id="currentHSK">HSK 1</div>
+                <div id="playerRank">LV. 1</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" style="padding-top: 130px;">
+        
+        <!-- MÀN HÌNH SETUP FLASHCARD -->
+        <div id="fcSetupScreen" class="setup-card">
+            <div class="setup-header">
+                <h2 class="setup-title" style="color: #2e7d32;">📇 HỌC FLASHCARD</h2>
+                <p class="setup-subtitle">Vuốt trái/phải để nạp từ vựng vào não bộ</p>
+            </div>
+
+            <div class="setup-group">
+                <div class="setup-label" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>📌 Chọn bộ từ vựng:</span>
+                    <span id="fcMasteredCounter" style="color: #2e7d32; font-weight: bold; background: #e8f5e9; padding: 4px 10px; border-radius: 12px; font-size: 12px;">Đang tải...</span>
+                </div>
+                <select id="fcHskSelect" class="setup-input-full" onchange="updateFcCounter()">
+                    <option value="1">HSK 1</option><option value="2">HSK 2</option>
+                    <option value="3">HSK 3</option><option value="4">HSK 4</option>
+                    <option value="5">HSK 5</option><option value="6">HSK 6</option>
+                </select>
+            </div>
+
+            <div class="setup-group">
+                <div class="setup-label">⚙️ Chế độ học:</div>
+                <select id="fcLearningMode" class="setup-input-full">
+                    <option value="full">Kiểu 1: Hiện sẵn (Hán tự + Pinyin + Tiếng Việt)</option>
+                    <option value="flip" selected>Kiểu 2: Thẻ lật (Chạm để xem Pinyin & Nghĩa)</option>
+                </select>
+            </div>
+
+            <button id="btnResumeFc" class="btn-start-game" style="background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%); display: none; margin-bottom: 10px; box-shadow: 0 6px 18px rgba(255, 152, 0, 0.35);" onclick="resumeFlashcard()">🔄 TIẾP TỤC BÀI ĐANG HỌC DỞ</button>
+            <button class="btn-start-game" style="background: linear-gradient(135deg, #66bb6a 0%, #2e7d32 100%); box-shadow: 0 6px 18px rgba(46, 125, 50, 0.35);" onclick="startFlashcard()">🚀 HỌC BÀI MỚI</button>
+        </div>
+
+        <!-- MÀN HÌNH HỌC FLASHCARD -->
+        <div id="fcPlayScreen" style="display: none; text-align: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <span id="fcProgressText" style="font-weight: bold; color: #666; font-size: 16px;">Thẻ 1/50</span>
+                <button onclick="quitFlashcard()" style="background: #ffebee; border: 1px solid #ffcdd2; border-radius: 8px; padding: 6px 12px; font-size: 14px; cursor: pointer; color: #c62828; font-weight: bold;">❌ Thoát</button>
+            </div>
+
+            <!-- Khung Thẻ Lật -->
+            <div id="fcCardContainer" class="flashcard-box" onclick="flipFlashcard()">
+                <div class="fc-front" id="fcFrontContent">
+                    <div id="fcHanzi" class="fc-hanzi">字</div>
+                    <div id="fcPinyin" class="fc-pinyin" style="margin-top: 15px; display: none;">zì</div>
+                    <div id="fcMeaning" class="fc-meaning" style="margin-top: 8px; display: none;">Nghĩa tiếng Việt</div>
+                </div>
+            </div>
+            <p style="font-size: 13px; color: #888; margin-top: 12px; font-weight: bold;" id="fcTipText">💡 Chạm vào thẻ để lật xem đáp án</p>
+
+            <!-- Nút Thao tác -->
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button class="fc-btn fc-btn-left" onclick="fcMarkUnknown()">⬅️ Chưa thuộc</button>
+                <button class="fc-btn fc-btn-right" onclick="fcMarkKnown()">Đã thuộc ➡️</button>
+            </div>
+        </div>
+
+        <!-- MÀN HÌNH HOÀN TẤT -->
+        <div id="fcResultScreen" class="setup-card" style="display: none; text-align: center;">
+            <h2 style="color: #2e7d32; font-size: 24px; margin-bottom: 10px;">🎉 HOÀN TẤT!</h2>
+            <p style="color: #666; margin-bottom: 25px; line-height: 1.5;">Bạn đã học xong bộ thẻ này.<br>Các từ chưa thuộc đã được tự động lưu vào khu vực <b>Ôn tập</b>.</p>
+            <button class="btn-start-game" style="background: linear-gradient(135deg, #2196f3 0%, #1565c0 100%);" onclick="resetFlashcard()">🔄 HỌC BỘ KHÁC</button>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <a href="../index.html" class="nav-btn"><span class="icon">🏠</span>Trang chủ</a>
+        <a href="gamecenter.html" class="logo-btn"><img src="../pic/logo.png" alt="Logo"></a>
+        <a href="setting.html" class="nav-btn"><span class="icon">⚙️</span>Cài đặt</a>
+    </div>
+
+    <!-- Gọi các file JS -->
+    <script src="../js/core.js"></script>
+    <script src="../js/flashcard.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>

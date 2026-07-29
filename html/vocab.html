@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK Game - Từ Vựng</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HSK Game">
+    <link rel="apple-touch-icon" href="../pic/logo.png">
+</head>
+<body>
+
+    <div class="header-fixed">
+        <div class="profile">
+            <div class="avatar">👤</div>
+            <div class="info">
+                <h3 id="playerName">Damon</h3>
+                <p id="playerAge">23 tuổi</p>
+            </div>
+            <div class="player-status">
+                <div id="currentHSK">HSK 4</div>
+                <div id="playerRank">Đồng</div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="hsk-fixed-wrapper">
+        <div class="hsk-tabs">
+            <div class="hsk-tab active-tab" onclick="changeHSK(1, this)">HSK 1</div>
+            <div class="hsk-tab" onclick="changeHSK(2, this)">HSK 2</div>
+            <div class="hsk-tab" onclick="changeHSK(3, this)">HSK 3</div>
+            <div class="hsk-tab" onclick="changeHSK(4, this)">HSK 4</div>
+            <div class="hsk-tab" onclick="changeHSK(5, this)">HSK 5</div>
+            <div class="hsk-tab" onclick="changeHSK(6, this)">HSK 6</div>
+        </div>
+    </div>
+    
+
+    <div class="container has-hsk">
+        <a href="flashcard.html" class="card green" style="text-align: center; margin-bottom: 20px;">
+    📇 HỌC FLASHCARD THÔNG MINH
+    <span>Vuốt thẻ nhớ từ & Lọc từ vựng tự động</span>
+    </a>
+        
+        <div id="vocabList"></div>
+
+        <div id="devMessage" class="dev-box" style="display: none;">
+            <img src="pic/baotri.png" class="maintain-img">
+            <h2 style="font-size: 20px; color: #333;">🚧 Đang Cập Nhật</h2>
+            <p style="margin-top: 10px; color: #666; font-size: 14px;">Dữ liệu từ vựng cấp độ này đang được biên soạn.</p>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <a href="../index.html" class="nav-btn">
+            <span class="icon">🏠</span>
+            Trang chủ
+        </a>
+        
+        <a href="../index.html" class="logo-btn">
+            <img src="../pic/logo.png" alt="Logo">
+        </a>
+
+        <a href="setting.html" class="nav-btn">
+            <span class="icon">⚙️</span>
+            Cài đặt
+        </a>
+    </div>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/vocab.js"></script>
+    <script src="../js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "HSK Game Center",
+  "short_name": "HSK Game",
+  "description": "Học tiếng Trung HSK qua Mini Game và Flashcard",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#42a5f5",
+  "icons": [
+    {
+      "src": "./pic/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./pic/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSK Game - Anh Hùng Bàn Phím</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HSK Game">
+    <link rel="apple-touch-icon" href="../pic/logo.png">
+</head>
+<body>
+
+    <!-- Header Profile Kế Thừa -->
+    <div class="header-fixed">
+        <div class="profile">
+            <div class="avatar">👤</div>
+            <div class="info">
+                <h3 id="playerName">Damon</h3>
+                <p id="playerAge">23 tuổi</p>
+            </div>
+            <div class="player-status">
+                <div id="currentHSK">HSK 4</div>
+                <div id="playerRank">Đồng</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <!-- MÀN HÌNH SETUP GAME 3 -->
+        <div id="game3Setup" class="setup-card">
+            <div class="setup-header">
+                <h2 class="setup-title" style="color: #00695c;">✍️ ANH HÙNG BÀN PHÍM</h2>
+                <p class="setup-subtitle">Gõ đáp án nhanh nhất có thể (Bấm Enter để chốt)</p>
+            </div>
+
+            <div class="setup-group">
+                <div class="setup-label">📌 Phạm vi từ vựng:</div>
+                <div class="hsk-range-row">
+                    <select id="g3StartHskSelect" onchange="checkGame3Hsk()">
+                        <option value="1">HSK 1</option>
+                        <option value="2">HSK 2</option>
+                        <option value="3">HSK 3</option>
+                        <option value="4">HSK 4</option>
+                        <option value="5">HSK 5</option>
+                        <option value="6">HSK 6</option>
+                    </select>
+                    <span class="range-separator">đến</span>
+                    <select id="g3EndHskSelect" onchange="checkGame3Hsk()">
+                        <option value="1">HSK 1</option>
+                        <option value="2">HSK 2</option>
+                        <option value="3">HSK 3</option>
+                        <option value="4">HSK 4</option>
+                        <option value="5">HSK 5</option>
+                        <option value="6">HSK 6</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="setup-group">
+                <div class="setup-label">🔄 Dạng đề thi:</div>
+                <select id="g3QuizType" class="setup-input-full">
+                    <option value="hanzi_to_vi">Hán Tự ➡️ Gõ Nghĩa Tiếng Việt</option>
+                    <option value="vi_to_hanzi">Tiếng Việt ➡️ Gõ Hán Tự hoặc Pinyin</option>
+                </select>
+            </div>
+
+            <div class="setup-group">
+                <div class="setup-label">🔢 Số lượng câu hỏi:</div>
+                <input type="number" id="g3QuestionCount" class="setup-input-full" min="10" max="100" step="10" value="10">
+            </div>
+
+            <!-- Ô chọn Dễ / Khó cho chế độ Bỏ Qua -->
+            <div class="setup-group">
+                <div class="setup-label">⚙️ Chế độ chơi:</div>
+                <div class="mode-grid">
+                    <div id="g3EasyModeCard" class="mode-card easy-card active-easy" onclick="selectGame3Mode('easy')">
+                        <h4>🟢 DỄ</h4>
+                        <p>Bỏ qua: Cất xuống cuối (1 lần)</p>
+                    </div>
+                    <div id="g3HardModeCard" class="mode-card hard-card" onclick="selectGame3Mode('hard')">
+                        <h4>🔴 KHÓ</h4>
+                        <p>Bỏ qua: Tính là sai luôn</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-start-game" style="background: linear-gradient(135deg, #26a69a 0%, #00695c 100%); box-shadow: 0 6px 18px rgba(0, 105, 92, 0.35);" onclick="startGame3()">🚀 XUẤT CHIÊU</button>
+        </div>
+
+        <!-- MÀN HÌNH PLAY GAME 3 -->
+        <div id="game3PlayScreen" class="game-play-box" style="display: none;">
+            <h3 id="g3ProgressText" style="color: #888;">Câu 1/10</h3>
+            
+            <p id="g3TimerText" style="font-weight: bold; color: #00695c; margin: 15px 0;">⏱️ 0:00</p>
+            
+            <h1 id="g3QuestionDisplay" class="hanzi-display">汉字</h1>
+            
+            <!-- BỌC FORM ĐỂ ĐIỆN THOẠI HIỂN THỊ NÚT "ĐI/ENTER" TRÊN BÀN PHÍM -->
+            <form id="g3Form" action="javascript:void(0);" onsubmit="submitGame3Answer(); return false;" style="margin: 30px 0 20px 0;">
+                <input type="text" id="g3TypingInput" class="typing-input" placeholder="Gõ đáp án vào đây..." autocomplete="off">
+            </form>
+            
+            <button type="button" class="btn-game-action" style="background: #00695c; box-shadow: 0 4px 15px rgba(0, 105, 92, 0.3);" onclick="submitGame3Answer()">
+                GỬI ĐÁP ÁN
+            </button>
+            <button type="button" class="btn-game-action" style="background: #9e9e9e; box-shadow: 0 4px 15px rgba(158, 158, 158, 0.3);" onclick="skipGame3Question()">
+                BỎ QUA CÂU NÀY
+            </button>
+        </div>
+
+        <!-- MÀN HÌNH KẾT QUẢ GAME 3 -->
+        <div id="game3ResultScreen" class="game-play-box" style="display: none; padding: 25px 15px;">
+            <h2 style="font-size: 26px; color: #333;">🎉 HOÀN THÀNH!</h2>
+            <p style="color: #666; margin-top: 5px;">Điểm số của bạn:</p>
+            <h1 id="g3ScoreText" style="color: #00695c; font-size: 45px; margin: 10px 0 5px 0;">10/10</h1>
+            
+            <p style="color: #888; font-size: 14px; font-weight: bold; margin-bottom: 5px;">⏱️ Thời gian: <span id="g3TotalTime">0 giây</span></p>
+            <p style="color: #f44336; font-size: 13px; font-style: italic;">(Dưới đây là các câu bạn đã làm sai)</p>
+            
+            <div class="g3-history-list" id="g3HistoryList"></div>
+            
+            <button class="btn-game-action btn-replay" style="margin-top: 15px; background: #00695c;" onclick="resetGame3()">
+                🔄 CHƠI LẠI
+            </button>
+            <button class="btn-game-action btn-leave" onclick="leaveGame3()">
+                🚪 RỜI GAME
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Footer Kế Thừa -->
+    <div class="footer">
+        <a href="../index.html" class="nav-btn">
+            <span class="icon">🏠</span>
+            Trang chủ
+        </a>
+        
+        <a href="../index.html" class="logo-btn">
+            <img src="../pic/logo.png" alt="Logo">
+        </a>
+
+        <a href="setting.html" class="nav-btn">
+            <span class="icon">⚙️</span>
+            Cài đặt
+        </a>
+    </div>
+
+    <script src="../js/core.js"></script>
+    <script src="../js/game3.js"></script>
+    <script src="../js/app.js"></script>
+</body>
+</html>
